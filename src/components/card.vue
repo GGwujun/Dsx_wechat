@@ -20,6 +20,12 @@
 				return state.user
 			}
 		})
+		//computed: {
+			// 在 mapState 里面我们既可以调用 store 的 state ，也可以调用 store 的 getters
+			//user() {
+				//return this.$store.state.user
+			//}
+		//}
 	};
 </script>
 
