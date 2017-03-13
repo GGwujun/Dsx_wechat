@@ -1,9 +1,5 @@
 <script>
 	import {
-		mapActions
-	} from 'vuex'
-
-	import {
 		mapState
 	} from 'vuex'
 const now = new Date();
@@ -14,7 +10,6 @@ const now = new Date();
 			}
 		},
 		computed: mapState({
-			// 在 mapState 里面我们既可以调用 store 的 state ，也可以调用 store 的 getters
 			currentId: (state) => {
 				return state.currentSessionId
 			},

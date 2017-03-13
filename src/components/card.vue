@@ -1,6 +1,4 @@
-<script>
-	import { mapActions } from 'vuex'
-	
+<script>	
 	import {mapState} from 'vuex'
 
 	export default {

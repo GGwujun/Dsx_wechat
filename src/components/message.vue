@@ -1,5 +1,6 @@
 <script>
 import {mapState} from 'vuex'
+//import Vue from 'vue';
 export default {
 
 	filters: {//将日期过滤为 hour:minutes
@@ -9,31 +10,36 @@ export default {
               }
               return date.getHours() + ':' + date.getMinutes();
          }
-     },
-     
-//  directives: {
-//      // 发送消息后滚动到底部
-//      'scroll-bottom' () {
-//          this.vm.$nextTick(() => {
-//              this.el.scrollTop = this.el.scrollHeight - this.el.clientHeight;
-//          });
-//      }
-//  },
+    },
     computed: mapState({
     		user: (state) => {
     			return state.user
     		},
 			session: (state) => {
-				debugger;
 				return state.sessions.find(session => session.id === state.currentSessionId)
 			}
-		})
-};
-
+	}),
+//	directives: {
+//      // 发送消息后滚动到底部
+//      'scroll-bottom' () {
+//      	console.log(this);
+//          this.$nextTick(() => {
+//              this.$el.scrollTop = this.$el.scrollHeight - this.$el.clientHeight;
+//          });
+//      }
+//  }
+	
+	mounted: function () {
+	  	this.$nextTick(() => {
+	  		debugger;
+	        this.$el.scrollTop = this.$el.scrollHeight - this.$el.clientHeight;
+	    });
+	}
+}
 </script>
 
 <template>
-<div class="message" v-scroll-bottom="session.messages">
+<div class="message" <!--v-scroll-bottom="session.messages"-->>
     <ul v-if="session">
         <li v-for="(item,index) in session.messages">
             <p class="time">
