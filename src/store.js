@@ -55,8 +55,8 @@ const store = new Vuex.Store({
             }
         },
         // 发送消息
-        SEND_MESSAGE ({ sessions, currentSessionId }, content) {
-            let session = sessions.find(item => item.id === currentSessionId);
+        SEND_MESSAGE (state, content) {
+            let session = state.sessions.find(item => item.id === state.currentSessionId);
             session.messages.push({
                 content: content,
                 date: new Date(),
@@ -70,14 +70,29 @@ const store = new Vuex.Store({
         // 搜索
         SET_FILTER_KEY (state, value) {
             state.filterKey = value;
+            console.log(state.filterKey)
         }
-    }
+    },
+    actions: {
+	    init_data ({ commit }) {
+	      commit('INIT_DATA')
+	    },
+	    sendMessage ({ commit },content) {
+	      commit('SEND_MESSAGE',content)
+	    },
+	    selectSession ({ commit },id) {
+	    	commit('SELECT_SESSION',id)
+	    },
+	    search ({ commit },value) {
+	      commit('SET_FILTER_KEY',value)
+	    }
+  	}
 });
 
 store.watch(
     (state) => state.sessions,
     (val) => {
-        console.log('CHANGE: ', val);
+        //console.log('CHANGE: ', val);
         localStorage.setItem('vue-chat-session', JSON.stringify(val));
     },
     {

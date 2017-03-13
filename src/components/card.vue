@@ -1,31 +1,19 @@
 <script>
-	import {
-		actions
-	} from '../actions'
+	import { mapActions } from 'vuex'
 	
 	import {mapState} from 'vuex'
 
 	export default {
-		vuex: {
-			actions: actions
-		},
 		methods: {
 			onKeyup(e) {
-				actions.search(e.target.value);
+				this.$store.dispatch('search',e.target.value);
 			}
 		},
 		computed: mapState({
-			// 在 mapState 里面我们既可以调用 store 的 state ，也可以调用 store 的 getters
 			user: (state) => {
 				return state.user
 			}
 		})
-		//computed: {
-			// 在 mapState 里面我们既可以调用 store 的 state ，也可以调用 store 的 getters
-			//user() {
-				//return this.$store.state.user
-			//}
-		//}
 	};
 </script>
 

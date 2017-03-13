@@ -6,13 +6,13 @@
 		</div>
 		<div class="main">
 			<message></message>
-			<text></text>
+			<Texts></Texts>
 		</div>
 	</div>
 </template>
 
 <script>	
-	import { actions } from './actions'
+	import { mapActions } from 'vuex'
 
 	import Card from './components/card';
 	import List from './components/list';
@@ -26,11 +26,11 @@
 			Texts,
 			Message
 		},
-		vuex: {
-			actions: actions
-		},
+		methods:mapActions([
+		  'init_data'
+		]),
 		created() {
-			actions.initData();
+			this.init_data();
 		}
 	}
 </script>
@@ -64,12 +64,13 @@
 	
 	#apps .text {
 		position: absolute;
-		width: 100%;
-		bottom: 0;
-		left: 0;
+		/*width: 100%;*/
+		bottom: 1px;
+    	left: 3px;
+    	right: 1px;
 	}
 	
 	#apps .message {
-		height: 160px;
+		height: 417px;
 	}
 </style>

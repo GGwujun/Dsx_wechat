@@ -1,10 +1,5 @@
 <script>
-	import { actions } from '../actions'
-
 	export default {
-		vuex: {
-			actions: actions
-		},
 		data() {
 			return {
 				content: ''
@@ -13,7 +8,7 @@
 		methods: {
 			onKeyup(e) {
 				if(e.ctrlKey && e.keyCode === 13 && this.content.length) {
-					actions.sendMessage(this.content);
+					this.$store.dispatch('sendMessage',this.content);
 					this.content = '';
 				}
 			}
@@ -30,16 +25,16 @@
 <style scoped>
 	.text {
 		height: 160px;
-		border-top: solid 1px #ddd;
+		border: none;
 	}
 	
 	.text textarea {
-		padding: 10px;
+		padding: 0px;
 		height: 100%;
 		width: 100%;
-		border: none;
 		outline: none;
 		font-family: "Micrsofot Yahei";
 		resize: none;
+		border: none;
 	}
 </style>

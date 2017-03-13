@@ -1,7 +1,5 @@
 <script>
-import {
-		mapState
-	} from 'vuex'
+import {mapState} from 'vuex'
 export default {
 
 	filters: {//将日期过滤为 hour:minutes
@@ -12,36 +10,37 @@ export default {
               return date.getHours() + ':' + date.getMinutes();
          }
      },
-    directives: {
-        // 发送消息后滚动到底部
-        'scroll-bottom' () {
-            this.vm.$nextTick(() => {
-                this.el.scrollTop = this.el.scrollHeight - this.el.clientHeight;
-            });
-        }
-    },
+     
+//  directives: {
+//      // 发送消息后滚动到底部
+//      'scroll-bottom' () {
+//          this.vm.$nextTick(() => {
+//              this.el.scrollTop = this.el.scrollHeight - this.el.clientHeight;
+//          });
+//      }
+//  },
     computed: mapState({
-			// 在 mapState 里面我们既可以调用 store 的 state ，也可以调用 store 的 getters
-			user: (state) => {
-				return state.user
-			},
-			session: (state,sessions, currentSessionId) => {
-				return state.sessions.find(session => session.id === currentSessionId)
+    		user: (state) => {
+    			return state.user
+    		},
+			session: (state) => {
+				debugger;
+				return state.sessions.find(session => session.id === state.currentSessionId)
 			}
 		})
-    
 };
+
 </script>
 
 <template>
 <div class="message" v-scroll-bottom="session.messages">
     <ul v-if="session">
-        <li v-for="item in session.messages">
+        <li v-for="(item,index) in session.messages">
             <p class="time">
                 <span>{{ item.date | time }}</span>
             </p>
             <div class="main" :class="{ self: item.self }">
-                <img class="avatar" width="30" height="30" :src="item.self ? user.img : session.user.img" />
+                <img class="avatar" width="30" height="30" :src="item.self ? session.user.img : user.img" />
                 <div class="text">{{ item.content }}</div>
             </div>
         </li>
@@ -56,6 +55,7 @@ export default {
 }
 .message li {
     margin-bottom: 15px;
+    list-style: none;
 }
 .message .time {
     margin: 7px 0;
