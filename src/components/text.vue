@@ -24,7 +24,7 @@
 
 <style scoped>
 	.text {
-		height: 160px;
+		height: 100px;
 		border: none;
 	}
 	

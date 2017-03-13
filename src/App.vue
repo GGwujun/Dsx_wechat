@@ -45,7 +45,7 @@
 	}
 	
 	#apps .sidebar,
-	.main {
+	#apps .main {
 		height: 100%;
 	}
 	
@@ -64,13 +64,12 @@
 	
 	#apps .text {
 		position: absolute;
-		/*width: 100%;*/
-		bottom: 1px;
+		bottom: -20px;
     	left: 3px;
     	right: 1px;
 	}
 	
 	#apps .message {
-		height: 417px;
+		height: calc(100% - 100px);
 	}
 </style>
