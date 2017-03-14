@@ -1,51 +1,43 @@
 <template>
-	<!--<div class="contain">
+	<div class="contain">
 		<div class="main">
-			<div id="apps">
+			<div id="apps" v-if='login'>
 				<div class="sidebar">
-					<!--<card></card>-->
-					<!--<router-view  name="card"></router-view>
-					<router-view  name="List"></router-view>-->
-					<!--<List></List>-->
-				<!--</div>
-				<div class="main">-->
-					<!--<message></message>
-					<Texts></Texts>-->
-					<!--<router-view  name="message"></router-view>
+					<router-view  name="Card"></router-view>
+					<router-view  name="List"></router-view>
+				</div>
+				<div class="main">
+					<router-view  name="Message"></router-view>
 					<router-view  name="Texts"></router-view>
 				</div>
 			</div>
+			<router-view  v-if='!login'></router-view>
 		</div>
-	</div>-->-->
-	<!--<Login></Login>-->
-	<router-view  name="Login"></router-view>
+	</div>
 </template>
 
 <script>
 	import {
 		mapActions
 	} from 'vuex'
+	import {
+		mapState
+	} from 'vuex'
 
-	import Card from './components/card';
-	import List from './components/list';
-	import Texts from './components/text';
-	import Message from './components/message';
-	import Login from './components/login';
 
 	export default {
-		components: {
-			Card,
-			List,
-			Texts,
-			Message,
-			Login
-		},
+		name: 'app',
 		methods: mapActions([
 			'init_data'
 		]),
 		created() {
 			this.init_data();
-		}
+		},
+		computed: mapState({
+			login: (state) => {
+				return state.login
+			}
+		})
 	}
 </script>
 
@@ -63,14 +55,9 @@
 	}
 	
 	#apps {
-		/*margin: 20px auto;
-		width: 800px;
-		height: 600px;
-		overflow: hidden;
-		border-radius: 3px;*/
 		max-width: 1000px;
 		min-width: 800px;
-		height: 100%;
+		height: 600px;
 		margin: 0 auto;
 		border-radius: 3px;
 		-moz-border-radius: 3px;
@@ -85,7 +72,6 @@
 	
 	#apps .sidebar {
 		float: left;
-		/*width: 200px;*/
 		color: #f4f4f4;
 		background-color: #2e3238;
 		position: relative;

@@ -23,23 +23,12 @@ export default new Router({
     },
     {
         path: '/main',
-        name:Card,
-        component: Card 
-    },
-    {
-        path: '/main',
-        name:List,
-        component: List 
-    },
-    {
-        path: '/main',
-        name:Texts,
-        component: Texts 
-    },
-    {
-        path: '/main',
-        name:Message,
-        component: Message 
+        components: {
+        	Card:Card,
+        	List:List,
+        	Texts:Texts,
+        	Message,Message
+        }
     },
     {
         path: '*', // ‘*’代表在上面的路由中查找不到就默认显示‘*’路由的内容，必须放在最后，不然在‘*’之后的路由都不起作用

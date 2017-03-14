@@ -32,8 +32,13 @@
 
 		</header>
 		<footer>
-			<input class="search" type="text" placeholder="search user..." @keyup="onKeyup">
+			<div class="search_bar">
+        		<i class="web_wechat_search"></i>
+        		<input class="search frm_search" type="text" placeholder="search user..." @keyup="onKeyup">
+    		</div>
 		</footer>
+		
+		
 	</div>
 </template>
 
@@ -103,14 +108,14 @@
 	}
 	
 	.web_wechat_add {
-		background: url(../../static/icon.jpg) no-repeat;
+		background: url(../../static/icons.png) no-repeat;
 		background-position: -434px -398px;
 		-webkit-background-size: 487px 462px;
 		background-size: 487px 462px;
 	}
 	
 	.card footer {
-		margin-top: 10px;
+		margin-top: 0px;
 	}
 	
 	.card .avatar,
@@ -140,4 +145,47 @@
 		outline: none;
 		background-color: #26292E;
 	}
+	.card .search_bar {
+    position: relative;
+    width: 244px;
+    margin: 0 auto 6px;
+}
+.search_bar .web_wechat_search {
+    position: absolute;
+    z-index: 101;
+    top: 1px;
+}
+.web_wechat_search {
+    background: url(../../static/icon.jpg) no-repeat;
+    background-position: -60px -432px;
+    -webkit-background-size: 487px 462px;
+    background-size: 487px 462px;
+}
+.web_wechat_screencut, .web_wechat_search {
+    display: inline-block;
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+}
+.web_wechat_search {
+    background: url(../../static/1OvE4o2.png) 0 -1946px;
+}
+.search_bar .frm_search {
+    width: 200px;
+    height: 32px;
+    line-height: 32px;
+    border: 0;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    background-color: #26292e;
+    color: #fff;
+    padding-left: 30px;
+    font-size: 12px;
+}
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: 100%;
+    margin: 0;
+}
 </style>
