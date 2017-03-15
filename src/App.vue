@@ -4,6 +4,7 @@
 			<div id="apps" v-if='login'>
 				<div class="sidebar">
 					<router-view  name="Card"></router-view>
+					<router-view  name="Menu"></router-view>
 					<router-view  name="List"></router-view>
 				</div>
 				<div class="main">
@@ -32,6 +33,10 @@
 		]),
 		created() {
 			this.init_data();
+			if(!this.login){
+				this.$router.push('/');
+			}
+			console.log(this.login)
 		},
 		computed: mapState({
 			login: (state) => {
@@ -48,21 +53,23 @@
 	}
 	
 	.main {
-		min-height: 600px;
 		-webkit-transition: padding .3s linear;
 		-webkit-backface-visibility: hidden;
 		backface-visibility: hidden;
 	}
 	
 	#apps {
-		max-width: 1000px;
-		min-width: 800px;
-		height: 600px;
+		width: 1000px;
 		margin: 0 auto;
 		border-radius: 3px;
 		-moz-border-radius: 3px;
 		-webkit-border-radius: 3px;
 		overflow: hidden;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 50%;
+		margin-left:-500px;
 	}
 	
 	#apps .sidebar,
@@ -95,6 +102,6 @@
 	}
 	
 	#apps .message {
-		height: calc(100% - 100px);
+		height: calc(100% - 245px);
 	}
 </style>

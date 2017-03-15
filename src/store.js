@@ -13,6 +13,7 @@ const store = new Vuex.Store({
     	login:false,
     	err:false,
     	errMession:'',
+    	lpmune:false,
         // 当前用户
         user: {
             name: 'coffce',
@@ -105,6 +106,9 @@ const store = new Vuex.Store({
         Is_Login (state, username,password) {
             state.login = true;
             state.user.name = username;
+        },
+        IS_LPMENUSHOW(state,lpmune){
+        	state.lpmune = lpmune;
         }
     },
     actions: {
@@ -125,6 +129,9 @@ const store = new Vuex.Store({
 	    },
 	    login({ commit },username,password){
 	    	commit('Is_Login',username,password)
+	    },
+	    lpMenu({commit},lpmune){
+	    	commit('IS_LPMENUSHOW',lpmune)
 	    }
   	}
 });

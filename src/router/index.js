@@ -6,6 +6,7 @@ import Card from '@/components/card';
 import List from '@/components/list';
 import Texts from '@/components/text';
 import Message from '@/components/message';
+import Menu from '@/components/lpmenu';
 
 
 
@@ -25,6 +26,7 @@ export default new Router({
         path: '/main',
         components: {
         	Card:Card,
+        	Menu:Menu,
         	List:List,
         	Texts:Texts,
         	Message,Message

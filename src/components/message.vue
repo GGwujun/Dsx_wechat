@@ -4,7 +4,7 @@
 	} from 'vuex'
 
 	import Vue from 'vue';
-	
+
 	export default {
 
 		filters: { //将日期过滤为 hour:minutes
@@ -34,8 +34,14 @@
 </script>
 
 <template>
-	<div class="message" v-scroll-bottom="session.messages">
-		<ul v-if="session">
+	<div class="message">
+		<div class="title_wrap">
+			<div class="title poi">
+				<a class="title_name ng-binding">{{user.name}}</a>
+				<i class="web_wechat_down_icon"></i>
+			</div>
+		</div>
+		<ul v-if="session" v-scroll-bottom="session.messages">
 			<li v-for="(item,index) in session.messages">
 				<p class="time">
 					<span>{{ item.date | time }}</span>
@@ -52,7 +58,12 @@
 <style scoped>
 	.message {
 		padding: 10px 15px;
+	}
+	
+	.message ul {
 		overflow-y: scroll;
+		height: 100%;
+		margin: 0 auto;
 	}
 	
 	.message li {
@@ -121,5 +132,86 @@
 		left: 100%;
 		border-right-color: transparent;
 		border-left-color: #b2e281;
+	}
+	
+	.title_wrap {
+		position: relative;
+		padding: 10px 0;
+		margin: 0 19px;
+		border-bottom: 1px solid #d6d6d6;
+		background-color: #eee;
+		z-index: 1024;
+		text-align: center;
+	}
+	
+	.title.poi {
+		cursor: pointer;
+	}
+	
+	.title {
+		font-weight: 400;
+		height: 25px;
+		display: inline-block;
+		font-size: 14px;
+	}
+	
+	.title .title_name {
+		display: inline-block;
+		vertical-align: middle;
+		max-width: 300px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		word-wrap: normal;
+		text-decoration: none;
+		color: #000;
+		font-weight: 400;
+	}
+	
+	.web_wechat_down_icon {
+		display: inline-block;
+		vertical-align: middle;
+	}
+	
+	.web_wechat_down_icon {
+		width: 10px;
+		height: 10px;
+		background: url(../../static/icons.png) no-repeat;
+		background-position: -477px -65px;
+		-webkit-background-size: 487px 462px;
+		background-size: 487px 462px;
+	}
+	
+	.web_wechat_down_icon {
+		vertical-align: middle;
+		display: inline-block;
+	}
+	
+	.web_wechat_down_icon {
+		background: url(../../static/1OvE4o2.png) 0 -795px;
+		width: 10px;
+		height: 10px;
+	}
+	
+	::-webkit-scrollbar {
+		width: 7px;
+		height: 15px;
+		background-color: #555;
+	}
+	/*定义滚动条轨道 内阴影+圆角*/
+	
+	::-webkit-scrollbar-track {
+		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+		border-radius: 10px;
+		background-color: #c3c3c3;
+	}
+	
+	
+	/*定义滑块 内阴影+圆角*/
+	
+	::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+		background-color: transparent;
 	}
 </style>
