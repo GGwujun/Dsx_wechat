@@ -195,20 +195,24 @@
 	
 	::-webkit-scrollbar {
 		width: 7px;
-		height: 15px;
+		height: 10px;
 	}
+	
+	
 	/*定义滚动条轨道 内阴影+圆角*/
 	
 	::-webkit-scrollbar-track {
 		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-		border-radius: 10px;
+		border-radius: 7px;
 	}
 	
 	
 	/*定义滑块 内阴影+圆角*/
 	
 	::-webkit-scrollbar-thumb {
-		border-radius: 10px;
+		border-radius: 7px;
 		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
 	}
+	
+	
 </style>
