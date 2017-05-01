@@ -4,6 +4,7 @@ import Login from '@/components/login'
 
 import Card from '@/components/card';
 import List from '@/components/list';
+import FriendList from '@/components/friendlist';
 import Texts from '@/components/text';
 import Message from '@/components/message';
 import Menu from '@/components/lpmenu';
@@ -29,7 +30,8 @@ export default new Router({
         	Menu:Menu,
         	List:List,
         	Texts:Texts,
-        	Message,Message
+        	Message,Message,
+        	FriendList
         }
     },
     {

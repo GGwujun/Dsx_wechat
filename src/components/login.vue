@@ -2,41 +2,66 @@
 	import {
 		mapState
 	} from 'vuex'
+	import CHAT from '../api/client'
+	import {
+		randomColor,
+		genUid
+	} from '../util/index'
 
 	export default {
-		data:{
-			username:'',
-			password:''
-			
-		},
-		methods: {
-			onKeyup(e) {
-				this.$store.dispatch('search', e.target.value);
-			},
-			login:function(){
-				if(!this.username)
-				{
-					this.$store.dispatch('err', '请输入用户名！');
+		data() {
+				return {
+					username: '',
+					password: '',
+					color: '',
+					weichat: ''
 				}
-				else if(!this.password){
-					this.$store.dispatch('err', '请输入密码！');
-				}else{
-					this.$router.push('/main');
-					this.$store.dispatch('login', this.username,this.password);
+			},
+			methods: {
+				onKeyup(e) {
+					this.$store.dispatch('search', e.target.value);
+				},
+				send(msg) {
+					CHAT.submit(msg)
+					this.msg = ''
+					console.log(CHAT)
+				},
+				login() {
+					let self = this;
+					if(!this.username) {
+						alert("昵称不能为空！");
+						this.$store.dispatch('err', '请输入用户名！');
+						return
+					}
+					if(!this.password) {
+						this.$store.dispatch('err', '请输入密码！');
+					}
+					let loginData = {
+						LoginID: this.username,
+						PassWord: this.password
+					}
+					CHAT.init(loginData, function(data) {
+						console.log(data)
+						if(!data.login) {
+							alert('用户名或者密码错误')
+						} else {
+							self.$store.dispatch('login', data);
+							self.$router.push('/main');
+						}
+					});
 				}
-			}
-		},
-		computed: mapState({
-			user: (state) => {
-				return state.user
 			},
-			err:(state) =>{
-				return state.err
-			},
-			errMession:(state) =>{
-				return state.errMession
-			}
-		})
+			computed: mapState({
+				user: (state) => {
+					return state.user
+				},
+				err: (state) => {
+					return state.err
+				},
+				errMession: (state) => {
+					return state.errMession
+				}
+			})
 	};
 </script>
 
@@ -57,16 +82,16 @@
 
 				<form class="login_form" id="loginForm">
 					<div class="login_input_panel">
-						<div class="login_input"> <i class="icon_login un"> </i> 
-							<input type="text" placeholder="邮箱/微信号/QQ号" id="account" name="account" v-model="username"> 
+						<div class="login_input"> <i class="icon_login un"> </i>
+							<input type="text" placeholder="邮箱/微信号/QQ号" id="account" name="account" v-model="username">
 						</div>
-						<div class="login_input"> <i class="icon_login pwd"> </i> 
-							<input type="password" placeholder="密码" id="pwd" name="password"  v-model="password"> 
+						<div class="login_input"> <i class="icon_login pwd"> </i>
+							<input type="password" placeholder="密码" id="pwd" name="password" v-model="password">
 						</div>
 					</div>
 
 					<div class="login_help_panel">
-						<label class="frm_checkbox_label selected"    for="rememberCheck"> 
+						<label class="frm_checkbox_label selected" for="rememberCheck"> 
 							<i class="icon_checkbox"></i>                                    
 							<input type="checkbox" class="frm_checkbox" id="rememberCheck">
 							记住帐号
@@ -137,8 +162,6 @@
 		-webkit-box-shadow: #999 0 2px 10px;
 		padding: 36px 35px 40px;
 	}
-	
-
 	
 	.login_box .avatar {
 		display: block;
@@ -273,7 +296,7 @@
 		margin-right: 1em;
 	}
 	
-	.selected .icon_checkbox  {
+	.selected .icon_checkbox {
 		background: url(../../static/page_login_z32f720.png) 0 -64px no-repeat;
 	}
 	
@@ -286,12 +309,9 @@
 		margin-right: 3px;
 		margin-top: -2px;
 	}
-	
-	
 	/*#rememberCheck[type=checkbox]:checked + i{
 		background: url(../../static/page_login_z32f720.png) 0 -64px no-repeat;
 	}*/
-	
 	
 	.icon_login.pwd {
 		background: url(../../static/page_login_z32f720.png) 0 -22px no-repeat;

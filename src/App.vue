@@ -5,7 +5,8 @@
 				<div class="sidebar">
 					<router-view name="Card"></router-view>
 					<router-view name="Menu"></router-view>
-					<router-view name="List"></router-view>
+					<router-view name="List" v-if="Switch.list"></router-view>
+					<router-view name="FriendList" v-if="Switch.friendlist"></router-view>
 				</div>
 				<div class="main">
 					<router-view name="Message"></router-view>
@@ -35,18 +36,20 @@
 			if(!this.login) {
 				this.$router.push('/');
 			}
-			console.log(this.login)
 		},
 		computed: mapState({
 			login: (state) => {
 				return state.login
+			},
+			Switch: (state) => {
+				return state.Switch
 			}
 		})
 	}
 </script>
 
 <style scoped>
-.contain {
+	.contain {
 		position: absolute;
 		top: 0;
 		bottom: 0;
@@ -55,51 +58,58 @@
 		background: url(../static/2zrdI1g.jpg) no-repeat 50%;
 		overflow: hidden;
 		background-size: cover;
-}
-.main {
-	-webkit-transition: padding .3s linear;
-	-webkit-backface-visibility: hidden;
-	backface-visibility: hidden;
-}
-#apps {
-	width: 1000px;
-	margin: 0 auto;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	overflow: hidden;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 50%;
-	margin-left: -500px;
-}
-#apps .sidebar,
-#apps .main {
-	height: 100%;
-}
-#apps .sidebar {
-	float: left;
-	color: #f4f4f4;
-	background-color: #2e3238;
-	position: relative;
-	width: 280px;
-	height: 100%;
-	float: left;
-	background: #2e3238;
-}
-#apps .main {
-	position: relative;
-	overflow: hidden;
-	background-color: #eee;
-}
-#apps .text {
-	position: absolute;
-	bottom: -20px;
-	left: 3px;
-	right: 1px;
-}
-#apps .message {
-	height: calc(100% - 245px);
-}
+	}
+	
+	.main {
+		-webkit-transition: padding .3s linear;
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+	}
+	
+	#apps {
+		width: 1000px;
+		margin: 0 auto;
+		border-radius: 3px;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		overflow: hidden;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 50%;
+		margin-left: -500px;
+	}
+	
+	#apps .sidebar,
+	#apps .main {
+		height: 100%;
+	}
+	
+	#apps .sidebar {
+		float: left;
+		color: #f4f4f4;
+		background-color: #2e3238;
+		position: relative;
+		width: 280px;
+		height: 100%;
+		float: left;
+		background: #2e3238;
+	}
+	
+	#apps .main {
+		position: relative;
+		overflow: hidden;
+		background-color: #eee;
+	}
+	
+	#apps .text {
+		position: absolute;
+		bottom: -20px;
+		left: 3px;
+		right: 1px;
+	}
+	
+	#apps .message {
+		height: calc(100% - 245px);
+	}
 </style>

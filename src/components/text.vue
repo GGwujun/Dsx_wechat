@@ -12,7 +12,7 @@
 						this.content = '';
 					}
 				},
-				send () {
+				send() {
 					this.$store.dispatch('sendMessage', this.content);
 					this.content = '';
 				}
@@ -21,32 +21,32 @@
 </script>
 
 <template>
-		<div class="box_ft ng-scope">
-			<div class="toolbar" id="tool_bar">
-				<a class="web_wechat_face" ng-clicks="showEmojiPanel($event)" href="javascript:;" title="表情"></a>
-				<a class="web_wechat_screencut ng-isolate-scope" ng-clicks="screenShot()" href="javascript:;" title="截屏"></a>
-				<a ng-click="sendClick($event)" class="web_wechat_pic js_fileupload ng-isolate-scope webuploader-container" href="javascript:;" title="图片和文件">
-					<div class="webuploader-pick"></div>
-					<div style="position: absolute; top: 0px; left: 0px; width: 30px; height: 30px; overflow: hidden; bottom: auto; right: auto;">
-						<input type="file" name="file" class="webuploader-element-invisible">
-						<label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);">
+	<div class="box_ft ng-scope">
+		<div class="toolbar" id="tool_bar">
+			<a class="web_wechat_face" ng-clicks="showEmojiPanel($event)" href="javascript:;" title="表情"></a>
+			<a class="web_wechat_screencut ng-isolate-scope" ng-clicks="screenShot()" href="javascript:;" title="截屏"></a>
+			<a ng-click="sendClick($event)" class="web_wechat_pic js_fileupload ng-isolate-scope webuploader-container" href="javascript:;" title="图片和文件">
+				<div class="webuploader-pick"></div>
+				<div style="position: absolute; top: 0px; left: 0px; width: 30px; height: 30px; overflow: hidden; bottom: auto; right: auto;">
+					<input type="file" name="file" class="webuploader-element-invisible">
+					<label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);">
 						</label>
-					</div>
-				</a>
-			</div>
-			<div class="content ng-isolate-scope">
-				<textarea id="editArea"  placeholder="按 Ctrl + Enter 发送"  class="flex edit_area ng-isolate-scope ng-pristine ng-valid" v-model="content" @keyup="onKeyup"></textarea>
-				<span class="caret_pos_helper" id="caretPosHelper"></span>
-			</div>
-
-			<div class="action">
-				<span ng-if="!isMacOS" class="desc ng-scope">按下Enter换行</span>
-				<a class="btn btn_send" href="javascript:;" v-on:click="send">发送</a>
-			</div>
+				</div>
+			</a>
 		</div>
+		<div class="content ng-isolate-scope">
+			<textarea id="editArea" placeholder="按 Ctrl + Enter 发送" class="flex edit_area ng-isolate-scope ng-pristine ng-valid" v-model="content" @keyup="onKeyup"></textarea>
+			<span class="caret_pos_helper" id="caretPosHelper"></span>
+		</div>
+
+		<div class="action">
+			<span ng-if="!isMacOS" class="desc ng-scope">按下Enter换行</span>
+			<a class="btn btn_send" href="javascript:;" v-on:click="send">发送</a>
+		</div>
+	</div>
 </template>
 
-<style scoped>	
+<style scoped>
 	.box_ft {
 		height: 180px;
 		border-top: 1px solid #d6d6d6;

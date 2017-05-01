@@ -10,6 +10,9 @@
 			},
 			lpMenushow(){
 				this.$store.dispatch('lpMenu',!this.lpmune);
+			},
+			switchmenu(data){
+				this.$store.dispatch('switchs',data);
 			}
 		},
 		computed: mapState({
@@ -45,19 +48,19 @@
 		</footer>
 
 		<div class="tab">
-			<div class="tab_item">
+			<div class="tab_item" @click="switchmenu('list')">
 				<a class="chat"  title="聊天" href="javascript:;">
 					<i class="web_wechat_tab_chat web_wechat_tab_chat_hl"></i>
 				</a>
 			</div>
 			<!-- ngIf: isShowReader -->
-			<div class="tab_item ng-scope">
+			<div class="tab_item ng-scope" >
 				<a class="chat" title="阅读" href="javascript:;">
 					<i class="web_wechat_tab_public"></i>
 				</a>
 			</div>
 			<!-- end ngIf: isShowReader -->
-			<div class="tab_item no_extra">
+			<div class="tab_item no_extra" @click="switchmenu('friendlist')">
 				<a class="chat"  title="通讯录" href="javascript:;">
 					<i class="web_wechat_tab_friends"></i>
 				</a>
