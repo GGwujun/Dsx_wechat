@@ -4,7 +4,7 @@
  */
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VueResource from 'vue-resource'
+import VueResource from 'vue-resource';
 Vue.use(VueResource);
 
 Vue.use(Vuex);
@@ -12,6 +12,7 @@ Vue.use(Vuex);
 const now = new Date();
 const store = new Vuex.Store({
 	state: {
+		url: 'http://119.23.245.101:3000/friend',
 		login: false,
 		err: false,
 		errMession: '',
@@ -75,14 +76,22 @@ const store = new Vuex.Store({
 			let data = localStorage.getItem('vue-chat-session');
 			let login = localStorage.getItem('islogin');
 			let username = localStorage.getItem('username');
+
 			if (data) {
 				state.sessions = JSON.parse(data);
 			}
+
 			if (username) {
 				state.login = JSON.parse(login);
 				state.user.name = JSON.parse(username);
 			}
-
+			
+			Vue.http.options.emulateJSON = true;
+			Vue.http.post(state.url, {UserID:1}).then(function (res) {
+				state.friends = res.body;
+			}, function () {
+				alert('请求失败处理');   //失败处理
+			});
 		},
 		// 发送消息
 		SEND_MESSAGE(state, content) {
@@ -131,16 +140,6 @@ const store = new Vuex.Store({
 		//顶部按钮菜单
 		IS_LPMENUSHOW(state, lpmune) {
 			state.lpmune = lpmune;
-		},
-
-		//获取好友列表
-		Init_Friends(state, uid) {
-			this.$http.post('post.do', { uid: '13786278418' }).then(function (res) {
-				alert(res.body);
-				state.friends = res;
-			}, function () {
-				alert('请求失败处理');   //失败处理
-			});
 		}
 	},
 	actions: {
@@ -167,9 +166,6 @@ const store = new Vuex.Store({
 		},
 		lpMenu({ commit }, lpmune) {
 			commit('IS_LPMENUSHOW', lpmune)
-		},
-		init_friends({ commit }, uid) {
-			commit('Init_Friends', uid)
 		}
 	}
 });

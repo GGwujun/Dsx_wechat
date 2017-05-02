@@ -3,7 +3,7 @@
 		<ul class="dropdown_menu">
 			<li>
 				<a tabindex="-1" href="javascript:;" ng-click="createChatroom()" title="发起聊天">
-					<i class="menuicon_chat"></i>发起聊天 </a>
+					<i class="menuicon_chat"></i>添加好友 </a>
 			</li>
 			<li>
 				<a tabindex="-1" href="javascript:;" ng-click="feedback()" title="意见反馈">
