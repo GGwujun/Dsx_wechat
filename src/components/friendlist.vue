@@ -7,6 +7,10 @@ export default {
 	methods: {
 		initfriend(id) {
 			this.$store.dispatch('init_friends', id);
+		},
+		selectFriend(info) {
+			//this.$store.dispatch('selectFriend', info);
+			this.$store.commit('SELECT_FRIEND', info)
 		}
 	},
 	computed: mapState({
@@ -20,9 +24,9 @@ export default {
 <template>
 	<div class="list">
 		<ul>
-			<li v-for="item in friends" @click="selectSession(item.ID)">
-				<img class="avatar" width="30" height="30" :alt="item.Name" src="/static/ssd.jpg">
-				<p class="name">{{item.Name}}</p>
+			<li v-for="item in friends" @click="selectFriend(item)">
+				<img class="avatar" width="30" height="30" :alt="item.user.name" src="/static/ssd.jpg">
+				<p class="name">{{item.user.name}}</p>
 			</li>
 		</ul>
 	</div>

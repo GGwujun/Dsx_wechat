@@ -5,6 +5,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueResource from 'vue-resource';
+import CHAT from './api/client';
+import io from 'socket.io-client';
 Vue.use(VueResource);
 
 Vue.use(Vuex);
@@ -12,7 +14,7 @@ Vue.use(Vuex);
 const now = new Date();
 const store = new Vuex.Store({
 	state: {
-		url: 'http://119.23.245.101:3000/friend',
+		url: 'http://119.23.245.101:3000/',
 		login: false,
 		err: false,
 		errMession: '',
@@ -25,46 +27,11 @@ const store = new Vuex.Store({
 		// 当前用户
 		user: {
 			name: 'coffce',
-			img: '../static/dsx.jpg'
+			img: '../static/dsx.jpg',
+			id: 0
 		},
 		// 会话列表
-		sessions: [
-
-			{
-				id: 1,
-				user: {
-					name: '猪八戒',
-					img: '../static/bj.jpg'
-				},
-				messages: [{
-					content: 'Hello，这是一个基于Vue + Vuex + Webpack构建的简单chat示例，聊天记录保存在localStorge, 有什么问题可以通过Github Issue问我。',
-					date: now
-				}, {
-					content: '项目地址: https://github.com/GGwujun/chat.git',
-					date: now
-				}]
-			}, {
-				id: 2,
-				user: {
-					name: '沙师弟',
-					img: '../static/ssd.jpg'
-				},
-				messages: []
-			}, {
-				id: 3,
-				user: {
-					name: '师傅',
-					img: '../static/qrcode.jpg'
-				},
-				messages: [{
-					content: '师傅就是如此六',
-					date: now
-				}, {
-					content: '大师兄公众号：‘web前端大师兄’',
-					date: now
-				}]
-			}
-		],
+		sessions: CHAT.changeinfo,
 		friends: [],
 		// 当前选中的会话
 		currentSessionId: 1,
@@ -85,9 +52,9 @@ const store = new Vuex.Store({
 				state.login = JSON.parse(login);
 				state.user.name = JSON.parse(username);
 			}
-			
+
 			Vue.http.options.emulateJSON = true;
-			Vue.http.post(state.url, {UserID:1}).then(function (res) {
+			Vue.http.post(state.url + 'friend', { UserID: 1 }).then(function (res) {
 				state.friends = res.body;
 			}, function () {
 				alert('请求失败处理');   //失败处理
@@ -101,10 +68,29 @@ const store = new Vuex.Store({
 				date: new Date(),
 				self: true
 			});
+
+			let params = {
+				fromid: state.user.id,
+				toid: state.currentSessionId,
+				messages: content
+			}
+			CHAT.changeInfo(params);
 		},
 		// 选择会话
 		SELECT_SESSION(state, id) {
 			state.currentSessionId = id;
+			console.log(state)
+		},
+		SELECT_FRIEND(state, info) {
+			let flag = state.sessions.find(function (item) {
+				return item.id == info.id;
+			})
+
+			if (flag) {
+				state.currentSessionId = flag.id;
+			} else {
+				state.sessions.push(info)
+			}
 		},
 		// 搜索
 		SET_FILTER_KEY(state, value) {
@@ -119,6 +105,7 @@ const store = new Vuex.Store({
 		Is_Login(state, logininfo) {
 			state.login = logininfo.login;
 			state.user.name = logininfo.user.NickName;
+			state.user.id = logininfo.user.ID;
 			if (logininfo.user.Photo)
 				state.user.img = logininfo.user.Photo;
 		},
