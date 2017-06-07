@@ -32,7 +32,6 @@ const store = new Vuex.Store({
 		},
 		// 会话列表
 		sessions: CHAT.changeinfo,
-		friends: [],
 		// 当前选中的会话
 		currentSessionId: 1,
 		// 过滤出只包含这个key的会话
@@ -41,45 +40,42 @@ const store = new Vuex.Store({
 	mutations: {
 		INIT_DATA(state) {
 			let data = localStorage.getItem('vue-chat-session');
-			let login = localStorage.getItem('islogin');
-			let username = localStorage.getItem('username');
+			let username = localStorage.getItem('userinfo');
 
 			if (data) {
 				state.sessions = JSON.parse(data);
 			}
 
 			if (username) {
-				state.login = JSON.parse(login);
-				state.user.name = JSON.parse(username);
+				state.login = true;
+				state.user.name = JSON.parse(username).username;
 			}
-
-			Vue.http.options.emulateJSON = true;
-			Vue.http.post(state.url + 'friend', { UserID: 1 }).then(function (res) {
-				state.friends = res.body;
-			}, function () {
-				alert('请求失败处理');   //失败处理
-			});
 		},
 		// 发送消息
 		SEND_MESSAGE(state, content) {
-			let session = state.sessions.find(item => item.id === state.currentSessionId);
-			session.messages.push({
-				content: content,
-				date: new Date(),
-				self: true
-			});
+			state.sessions.forEach(function (item) {
+				if (item.id === state.currentSessionId) {
+					let username = localStorage.getItem('userinfo');
+					username = JSON.parse(username);
+					item.messages.push({
+						content: content,
+						date: new Date(),
+						self: true
+					});
 
-			let params = {
-				fromid: state.user.id,
-				toid: state.currentSessionId,
-				messages: content
-			}
-			CHAT.changeInfo(params);
+					let params = {
+						fromid: username.id,
+						toid: state.currentSessionId,
+						messages: content
+					}
+					console.log(params);
+					CHAT.changeInfo(params);
+				}
+			})
 		},
 		// 选择会话
 		SELECT_SESSION(state, id) {
 			state.currentSessionId = id;
-			console.log(state)
 		},
 		SELECT_FRIEND(state, info) {
 			let flag = state.sessions.find(function (item) {
@@ -95,7 +91,6 @@ const store = new Vuex.Store({
 		// 搜索
 		SET_FILTER_KEY(state, value) {
 			state.filterKey = value;
-			console.log(state.filterKey)
 		},
 		Login_err(state, value) {
 			state.err = true;
@@ -104,10 +99,12 @@ const store = new Vuex.Store({
 		//登录
 		Is_Login(state, logininfo) {
 			state.login = logininfo.login;
-			state.user.name = logininfo.user.NickName;
-			state.user.id = logininfo.user.ID;
-			if (logininfo.user.Photo)
-				state.user.img = logininfo.user.Photo;
+			state.user.name = logininfo.user.username;
+			state.user.id = logininfo.user.id;
+			if (logininfo.user.avatar_url)
+				state.user.img = logininfo.user.avatar_url;
+
+			localStorage.setItem('userinfo', JSON.stringify(logininfo.user));
 		},
 		//左边菜单切换
 		Switch(state, attrs) {
@@ -136,54 +133,30 @@ const store = new Vuex.Store({
 		sendMessage({ commit }, content) {
 			commit('SEND_MESSAGE', content)
 		},
-		selectSession({ commit }, id) {
-			commit('SELECT_SESSION', id)
-		},
-		search({ commit }, value) {
-			commit('SET_FILTER_KEY', value)
-		},
+		// selectSession({ commit }, id) {
+		// 	commit('SELECT_SESSION', id)
+		// },
 		err({ commit }, value) {
 			commit('Login_err', value)
 		},
 		login({ commit }, logininfo) {
 			commit('Is_Login', logininfo)
-		},
-		switchs({ commit }, info) {
-			commit('Switch', info)
-		},
-		lpMenu({ commit }, lpmune) {
-			commit('IS_LPMENUSHOW', lpmune)
 		}
+		// switchs({ commit }, info) {
+		// 	commit('Switch', info)
+		// }
+		// lpMenu({ commit }, lpmune) {
+		// 	commit('IS_LPMENUSHOW', lpmune)
+		// }
 	}
 });
 
 store.watch(
 	(state) => state.sessions,
 	(val) => {
-		console.log('CHANGE: ', val);
 		localStorage.setItem('vue-chat-session', JSON.stringify(val));
-		localStorage.setItem('islogin', JSON.stringify(val));
 	}, {
 		deep: true
 	}
 );
-
-store.watch(
-	(state) => state.login,
-	(val) => {
-		localStorage.setItem('islogin', JSON.stringify(val));
-	}, {
-		deep: true
-	}
-);
-
-store.watch(
-	(state) => state.user.name,
-	(val) => {
-		localStorage.setItem('username', JSON.stringify(val));
-	}, {
-		deep: true
-	}
-);
-
 export default store;

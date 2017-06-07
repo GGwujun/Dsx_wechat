@@ -27,7 +27,6 @@ const CHAT = {
 
 	init: function (data, handle) {
 		let self = this;
-
 		//连接websocket后端服务器
 		this.socket = io.connect('http://119.23.245.101:3000/');
 
@@ -38,11 +37,6 @@ const CHAT = {
 		this.socket.on('login', function (obj) {
 			handle && handle(obj)
 		});
-
-		//心跳包，30s左右无数据浏览器会断开连接Heartbeat
-		setInterval(() => {
-			this.socket.emit('heartbeat', 1);
-		}, 10000)
 
 		//监听消息
 		this.socket.on('changeInfo', function (o) {
@@ -72,9 +66,9 @@ const CHAT = {
 
 
 		//监听用户退出
-		// this.socket.on('logout', function (o) {
-		// 	CHAT.updateSysMsg(o, 'logout');
-		// });
+		this.socket.on('logout', function (o) {
+
+		});
 	}
 }
 export default CHAT

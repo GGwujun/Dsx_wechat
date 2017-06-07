@@ -2,22 +2,41 @@
 import {
 	mapState
 } from 'vuex'
+import Vue from 'vue';
 const now = new Date();
 export default {
+	data() {
+		return {
+			friends: []
+		}
+	},
 	methods: {
-		initfriend(id) {
-			this.$store.dispatch('init_friends', id);
-		},
 		selectFriend(info) {
-			//this.$store.dispatch('selectFriend', info);
-			this.$store.commit('SELECT_FRIEND', info)
+			this.$store.commit('SELECT_FRIEND', info);
+			// this.$store.dispatch('switchs', 'list');
+			this.$store.commit('Switch', 'list');
 		}
 	},
 	computed: mapState({
-		friends: (state) => {
-			return state.friends;
+		url: (state) => {
+			return state.url;
+		},
+		user: (state) => {
+			return state.user;
 		}
-	})
+	}),
+	created() {
+		let self = this;
+		Vue.http.options.emulateJSON = true;
+		let username = localStorage.getItem('userinfo');
+		username = JSON.parse(username);
+		Vue.http.post(self.url + 'friend', { UserID: username.id }).then(function (res) {
+			self.friends = res.body;
+			console.log(self.friends)
+		}, function () {
+			alert('请求失败处理');   //失败处理
+		});
+	}
 }
 </script>
 
@@ -25,7 +44,7 @@ export default {
 	<div class="list">
 		<ul>
 			<li v-for="item in friends" @click="selectFriend(item)">
-				<img class="avatar" width="30" height="30" :alt="item.user.name" src="/static/ssd.jpg">
+				<img class="avatar" width="30" height="30" :alt="item.user.name" :src="item.user.img">
 				<p class="name">{{item.user.name}}</p>
 			</li>
 		</ul>

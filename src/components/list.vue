@@ -6,7 +6,8 @@ const now = new Date();
 	export default {
 		methods: {
 			selectSession(id) {
-				this.$store.dispatch('selectSession', id);
+				// this.$store.dispatch('selectSession', id);
+				this.$store.commit('SELECT_SESSION', id);
 			}
 		},
 		computed: mapState({

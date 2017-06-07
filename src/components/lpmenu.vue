@@ -26,7 +26,8 @@
 	export default {
 		methods: {
 			onKeyup(e) {
-				this.$store.dispatch('search', e.target.value);
+				// this.$store.dispatch('search', e.target.value);
+                this.$store.commit('SET_FILTER_KEY', e.target.value);
 			}
 		},
 		computed: mapState({
